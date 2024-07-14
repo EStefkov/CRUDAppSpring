@@ -1,0 +1,62 @@
+<!-- src/main/resources/templates/header.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 3px;
+            background-color: #4CAF50;
+        }
+
+        nav ul li a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<!-- Заглавие на страницата -->
+<header>
+    <h1>Моят уебсайт</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Начало</a></li>
+            <li><a href="/users">Потребители</a></li>
+            <!-- Добави други линкове на навигацията според нуждите на твоя сайт -->
+        </ul>
+    </nav>
+</header>
