@@ -1,8 +1,7 @@
 package com.example.crudmavenapp.controller;
 
-import  com.example.crudmavenapp.entities.User;
-import  com.example.crudmavenapp.repository.UserRepository;
-
+import com.example.crudmavenapp.entities.User;
+import com.example.crudmavenapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -11,19 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 import java.util.Optional;
+import io.swagger.annotations.*;
 
 @Controller
 @RequestMapping("/users")
+@Api(value = "User Management System", description = "Operations pertaining to user in User Management System")
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
+    @ApiOperation(value = "View a list of available users", response = List.class)
     @GetMapping("")
     public String getAllUsers(Model model,
                               @RequestParam(name = "searchTerm", required = false) String searchTerm,
@@ -41,6 +41,7 @@ public class UserController {
         return "user-list";
     }
 
+    @ApiOperation(value = "View a list of available users", response = List.class)
     @GetMapping("/")
     public String getAllUsers(Model model, @RequestParam(defaultValue = "firstName") String sort) {
         List<User> users = userRepository.findAll(Sort.by(sort).ascending());
@@ -48,6 +49,7 @@ public class UserController {
         return "user-list";
     }
 
+    @ApiOperation(value = "Get a user by Id", response = User.class)
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         Optional<User> user = userRepository.findById(id);
@@ -58,6 +60,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Create a new user")
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String createUser(User user, RedirectAttributes redirectAttributes) {
         User createdUser = userRepository.save(user);
@@ -65,6 +68,7 @@ public class UserController {
         return "redirect:/"; // Редиректва към основната страница
     }
 
+    @ApiOperation(value = "Update an existing user")
     @PutMapping("/{id}")
     public String updateUser(@PathVariable int id, User userDetails, RedirectAttributes redirectAttributes) {
         Optional<User> user = userRepository.findById(id);
@@ -84,6 +88,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Edit user by Id")
     @GetMapping("/{id}/edit")
     public String getUserByIdForUpdate(@PathVariable int id, Model model) {
         Optional<User> userOptional = userRepository.findById(id);
@@ -96,7 +101,7 @@ public class UserController {
         }
     }
 
-
+    @ApiOperation(value = "Delete a user by Id")
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (userRepository.existsById(id)) {
