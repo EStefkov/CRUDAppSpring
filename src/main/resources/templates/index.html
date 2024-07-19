@@ -4,35 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-
     <link rel="stylesheet" href="/css/styles.css">
     <th:block th:replace="header :: header"></th:block>
 </head>
 <body>
 <div align="center">
-<h2>Create User</h2>
+    <h2>Create User</h2>
 
-<div th:if="${message}" class="message">
-    <p th:text="${message}"></p>
+    <div th:if="${message}" class="message">
+        <p th:text="${message}"></p>
+    </div>
+
+    <div th:if="${errorMessage}" class="error">
+        <p th:text="${errorMessage}">An error has occurred.</p>
+    </div>
 </div>
 
-</div>
-
-<form action="/users" method="post">
+<form action="/users" method="post" th:object="${user}">
     <label for="firstName">First Name:</label><br>
-    <input type="text" id="firstName" name="firstName" required><br><br>
+    <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required><br><br>
+
+    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
 
     <label for="lastName">Last Name:</label><br>
-    <input type="text" id="lastName" name="lastName" required><br><br>
+    <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required><br><br>
+
+    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
 
     <label for="number">Number:</label><br>
-    <input type="text" id="number" name="number" required><br><br>
+    <input type="text" id="number" name="number" th:field="*{number}" required><br><br>
+
+    <div th:if="${#fields.hasErrors('number')}" th:errors="*{number}"></div>
 
     <label for="mailAddress">Email Address:</label><br>
-    <input type="email" id="mailAddress" name="mailAddress" required><br><br>
+    <input type="email" id="mailAddress" name="mailAddress" th:field="*{mailAddress}" required><br><br>
+
+    <div th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}"></div>
 
     <label for="birthDate">Birth Date:</label><br>
-    <input type="date" id="birthDate" name="birthDate" required><br><br>
+    <input type="date" id="birthDate" name="birthDate" th:field="*{birthDate}" required><br><br>
+
+    <div th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></div>
 
     <button type="submit">Create User</button>
 </form>

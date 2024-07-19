@@ -15,9 +15,6 @@
     <div th:if="${message}" style="color: green;">
         <p th:text="${message}"></p>
     </div>
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
-    </div>
 
     <form action="/users" method="get">
         <input type="text" name="searchTerm" placeholder="Search by First Name" th:value="${searchTerm}">
