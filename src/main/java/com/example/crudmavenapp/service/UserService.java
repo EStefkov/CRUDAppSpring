@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+//docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=rootpassword -e
+// MYSQL_DATABASE=mydatabase -e MYSQL_USER=myuser -e MYSQL_PASSWORD=mypassword
+// -p 3306:3306 -d mysql:latest
 @Service
 public class UserService {
 
