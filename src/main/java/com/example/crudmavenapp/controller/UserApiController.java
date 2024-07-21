@@ -3,6 +3,11 @@ package com.example.crudmavenapp.controller;
 import com.example.crudmavenapp.entities.User;
 import com.example.crudmavenapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
+
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,4 +46,6 @@ public class UserApiController {
     public void deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
     }
+
+
 }

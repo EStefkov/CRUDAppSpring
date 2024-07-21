@@ -4,7 +4,6 @@ import com.example.crudmavenapp.entities.User;
 import com.example.crudmavenapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,10 +26,13 @@ public class UserController {
     @GetMapping("")
     public String getAllUsers(Model model,
                               @RequestParam(name = "searchTerm", required = false) String searchTerm,
-                              @RequestParam(name = "sort", defaultValue = "firstName") String sort) {
-        List<User> users = userService.getAllUsers(searchTerm, sort);
+                              @RequestParam(name = "sort", defaultValue = "firstName") String sort,
+                              @RequestParam(name = "order", defaultValue = "asc") String order) {
+        List<User> users = userService.getAllUsers(searchTerm, sort, order);
         model.addAttribute("users", users);
         model.addAttribute("searchTerm", searchTerm);
+        model.addAttribute("sort", sort);
+        model.addAttribute("order", order);
         return "user-list";
     }
 

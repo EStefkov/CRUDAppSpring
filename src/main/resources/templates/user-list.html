@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>User List</title>
-
     <link rel="stylesheet" href="/css/styles.css">
     <th:block th:replace="header :: header"></th:block>
 </head>
@@ -17,38 +16,25 @@
     </div>
 
     <form action="/users" method="get">
-        <input type="text" name="searchTerm" placeholder="Search by First Name" th:value="${searchTerm}">
+        <input type="text" name="searchTerm" placeholder="Search bar" th:value="${searchTerm}">
         <button type="submit">Search</button>
     </form>
 
-    <table border="1">
+    <table>
         <thead>
         <tr>
-            <th><a th:href="@{/users/?sort=firstName}">First Name</a></th>
-            <th><a th:href="@{/users/?sort=lastName}">Last Name</a></th>
-            <th><a th:href="@{/users/?sort=birthDate}">Birth Date</a></th>
-            <th><a th:href="@{/users/?sort=number}">Number</a></th>
-            <th><a th:href="@{/users/?sort=mailAddress}">Email</a></th>
-            <th>Actions</th> <!-- Добавяме колона за действия -->
+            <th><a th:href="@{|/users?sort=firstName&order=${sort == 'firstName' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">First Name</a></th>
+            <th><a th:href="@{|/users?sort=lastName&order=${sort == 'lastName' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Last Name</a></th>
+            <th><a th:href="@{|/users?sort=number&order=${sort == 'number' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Number</a></th>
+            <th><a th:href="@{|/users?sort=mailAddress&order=${sort == 'mailAddress' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Mail Address</a></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td th:text="${user.birthDate}"></td>
-            <td th:text="${user.number}"></td>
-            <td th:text="${user.mailAddress}"></td>
-            <td>
-                <!-- Бутон за редактиране на потребител -->
-                <a th:href="@{'/users/' + ${user.id} + '/edit'}">Edit</a>
-
-                <!-- Форма за изтриване на потребител -->
-                <form th:action="@{'/users/' + ${user.id}}" method="post" style="display:inline;">
-                    <input type="hidden" name="_method" value="delete"> <!-- Method override for DELETE -->
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
+            <td th:text="${user.firstName}">First Name</td>
+            <td th:text="${user.lastName}">Last Name</td>
+            <td th:text="${user.number}">Number</td>
+            <td th:text="${user.mailAddress}">Mail Address</td>
         </tr>
         </tbody>
     </table>

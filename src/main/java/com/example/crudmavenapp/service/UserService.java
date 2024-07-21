@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-//docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=rootpassword -e
-// MYSQL_DATABASE=mydatabase -e MYSQL_USER=myuser -e MYSQL_PASSWORD=mypassword
-// -p 3306:3306 -d mysql:latest
+
 @Service
 public class UserService {
 
@@ -20,6 +20,11 @@ public class UserService {
 
     public List<User> getAllUsers(String searchTerm, String sort) {
         Sort sortOrder = Sort.by(sort).ascending();
+        return userRepository.findBySearchTerm(searchTerm,sortOrder);
+    }
+
+    public List<User> getAllUsers(String searchTerm, String sort, String order) {
+        Sort sortOrder = Sort.by(Sort.Direction.fromString(order), sort);
         return userRepository.findBySearchTerm(searchTerm, sortOrder);
     }
 
