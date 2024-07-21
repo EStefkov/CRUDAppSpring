@@ -22,6 +22,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
            "(:searchTerm IS NULL OR u.mailAddress LIKE %:searchTerm%)")
    List<User> findBySearchTerm(@Param("searchTerm") String searchTerm, Sort sort);
 
+   @Query("SELECT u FROM User u WHERE " +
+           "(:searchTerm IS NULL OR u.firstName LIKE %:searchTerm%) OR " +
+           "(:searchTerm IS NULL OR u.lastName LIKE %:searchTerm%) OR " +
+           "(:searchTerm IS NULL OR u.number LIKE %:searchTerm%) OR " +
+           "(:searchTerm IS NULL OR u.mailAddress LIKE %:searchTerm%)")
+   Page<User> findBySearchTerm(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+
 }
 
 

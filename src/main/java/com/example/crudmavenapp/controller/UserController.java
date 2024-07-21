@@ -4,6 +4,7 @@ import com.example.crudmavenapp.entities.User;
 import com.example.crudmavenapp.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -27,14 +32,18 @@ public class UserController {
     public String getAllUsers(Model model,
                               @RequestParam(name = "searchTerm", required = false) String searchTerm,
                               @RequestParam(name = "sort", defaultValue = "firstName") String sort,
-                              @RequestParam(name = "order", defaultValue = "asc") String order) {
-        List<User> users = userService.getAllUsers(searchTerm, sort, order);
-        model.addAttribute("users", users);
+                              @RequestParam(name = "order", defaultValue = "asc") String order,
+                              @RequestParam(name = "page", defaultValue = "0") int page,
+                              @RequestParam(name = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+        Page<User> userPage = userService.getAllUsers(searchTerm, pageable);
+        model.addAttribute("userPage", userPage);
         model.addAttribute("searchTerm", searchTerm);
         model.addAttribute("sort", sort);
         model.addAttribute("order", order);
         return "user-list";
     }
+
 
     @GetMapping("/new")
     public String showCreateUserForm(Model model) {

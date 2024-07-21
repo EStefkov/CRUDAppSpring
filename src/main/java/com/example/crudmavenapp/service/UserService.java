@@ -20,12 +20,16 @@ public class UserService {
 
     public List<User> getAllUsers(String searchTerm, String sort) {
         Sort sortOrder = Sort.by(sort).ascending();
-        return userRepository.findBySearchTerm(searchTerm,sortOrder);
+        return userRepository.findBySearchTerm(searchTerm, sortOrder);
     }
 
     public List<User> getAllUsers(String searchTerm, String sort, String order) {
         Sort sortOrder = Sort.by(Sort.Direction.fromString(order), sort);
         return userRepository.findBySearchTerm(searchTerm, sortOrder);
+    }
+
+    public Page<User> getAllUsers(String searchTerm, Pageable pageable) {
+        return userRepository.findBySearchTerm(searchTerm, pageable);
     }
 
     public Optional<User> getUserById(int id) {

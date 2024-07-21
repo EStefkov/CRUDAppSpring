@@ -27,6 +27,14 @@ public class UserApiController {
         return userService.getAllUsers(searchTerm, sort);
     }
 
+    @GetMapping("/paged")
+    public Page<User> getPagedUsers(
+            @RequestParam(value = "searchTerm", defaultValue = "") String searchTerm,
+            Pageable pageable) {
+        return userService.getAllUsers(searchTerm, pageable);
+    }
+
+
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable int id) {
         return userService.getUserById(id);

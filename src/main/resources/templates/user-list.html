@@ -26,18 +26,38 @@
             <th><a th:href="@{|/users?sort=firstName&order=${sort == 'firstName' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">First Name</a></th>
             <th><a th:href="@{|/users?sort=lastName&order=${sort == 'lastName' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Last Name</a></th>
             <th><a th:href="@{|/users?sort=number&order=${sort == 'number' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Number</a></th>
+            <th><a th:href="@{|/users?sort=birthDate&order=${sort == 'birthDate' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Birth date</a></th>
             <th><a th:href="@{|/users?sort=mailAddress&order=${sort == 'mailAddress' ? (order == 'asc' ? 'desc' : 'asc') : 'asc'}|}">Mail Address</a></th>
+            <th><a>Actions </a> </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
+        <tr th:each="user : ${userPage.content}">
             <td th:text="${user.firstName}">First Name</td>
             <td th:text="${user.lastName}">Last Name</td>
             <td th:text="${user.number}">Number</td>
+            <td th:text="${user.birthDate}">Birth date</td>
             <td th:text="${user.mailAddress}">Mail Address</td>
+
+            <td>
+                <a th:href="@{'/users/' + ${user.id} + '/edit'}">Edit</a>
+                <form th:action="@{'/users/' + ${user.id}}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"> <!-- Method override for DELETE -->
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+
         </tr>
+
         </tbody>
+
     </table>
+
+    <div>
+        <a th:if="${userPage.hasPrevious()}" th:href="@{|/users?sort=${sort}&order=${order}&page=${userPage.number - 1}&size=${userPage.size}|}">Previous</a>
+        <span> Page <span th:text="${userPage.number + 1}">1</span> of <span th:text="${userPage.totalPages}">1</span> </span>
+        <a th:if="${userPage.hasNext()}" th:href="@{|/users?sort=${sort}&order=${order}&page=${userPage.number + 1}&size=${userPage.size}|}">Next</a>
+    </div>
 </div>
 </body>
 </html>
