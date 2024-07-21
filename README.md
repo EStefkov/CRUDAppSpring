@@ -66,7 +66,7 @@ Adjust spring.datasource.url if your MySQL server uses a different port or SSL c
 
 # API Documentation
 ### Base URL
-Assume the base URL for the API endpoints is http://localhost:8080/users.
+Assume the base URL for the API endpoints is http://localhost:8080/users &  http://localhost:8080/api/users.
 
 ### Queries
 1. Get All Users
